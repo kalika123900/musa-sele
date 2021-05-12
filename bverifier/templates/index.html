@@ -1,0 +1,130 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Business Verifier</h1>
+        <p>Verify business using instagram account or business website</p>
+  </div>
+    <div class="row">
+        <div class="col-md-6" style="min-height: 400px">
+            <h3 class="btn btn-primary" style="margin-bottom: 20px;">Search Any Business Here</h3>
+            {% if search_message %}
+                {% ifequal search_status 'success' %}
+                    <div class="alert alert-success fade in alert-dismissible" role="alert">
+                    {{ search_message }}
+                    </div>
+                {% endifequal %}
+                {% ifequal search_status 'failure'%}
+                    <div class="alert alert-danger fade in alert-dismissible" role="alert">
+                    {{ search_message }}
+                    </div>
+                {% endifequal %} 
+            {% endif %}
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="pill" href="#home">Instagram</a></li>
+                <li><a data-toggle="pill" href="#menu1">Website</a></li>
+            </ul>
+        
+            <div class="tab-content">
+                <div id="home" class="tab-pane fade in active">
+                    <h3></h3>
+                    <form action="/search" method="post">
+                        <div class="form-group">
+                            <label for="email">Instagram User Name</label>
+                            <input type="text" name="username" placeholder="Enter Instagram Business User Name" class="form-control" id="email">
+                            <input type="hidden" name="method" value="instagram">    
+                            {% csrf_token %}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <div id="menu1" class="tab-pane fade">
+                    <h3></h3>
+                    <form action="/search" method="post">
+                        <div class="form-group">
+                            <label for="email">Enter Business URL</label>
+                            <input type="text" name="weburl" placeholder="Enter Business Website URL" class="form-control" id="email">
+                            <input type="hidden" name="method" value="weburl">
+                            {% csrf_token %}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                </div>
+        </div>
+        <div class="col-md-6" style="border-left: 2px solid #b8c6d2; padding-left: 10px; min-height: 400px">
+            <h3 class="btn btn-primary" style="margin-bottom: 20px;">Register Your business with us</h3>
+            {% if register_message %}
+                {% ifequal register_status 'success' %}
+                    <div class="alert alert-success fade in alert-dismissible" role="alert">
+                    {{ register_message }}
+                    </div>
+                {% endifequal %}
+                {% ifequal register_status 'failure'%}
+                    <div class="alert alert-danger fade in alert-dismissible" role="alert">
+                    {{ register_message }}
+                    </div>
+                {% endifequal %} 
+            {% endif %}
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="pill" href="#menu12">Website</a></li>
+                <li><a data-toggle="pill" href="#home12">Instagram</a></li>
+            </ul>
+        
+            <div class="tab-content">
+                <div id="home12" class="tab-pane">
+                    <h3></h3>
+                    <form action="/register" method="post">
+                        <div class="form-group">
+                            <label for="email">Enter Instagram Username</label>
+                            <input type="text" name="weburl" placeholder="Enter Business Website URL" class="form-control" id="email"  required>
+                            <br/>
+                            <label for="email">Enter CR Number</label>
+                            <input type="text" name="cr_number" placeholder="Enter Business CR Number" class="form-control" id="cr_number" required>
+                            <br/>
+                            <input type="hidden" name="method" value="instagram">
+                            {% csrf_token %}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <div id="menu12" class="tab-pane fade in active">
+                    <h3></h3>
+                    <form action="/register" method="post">
+                        <div class="form-group">
+                            <label for="email">Enter Website URL</label>
+                            <input type="text" name="weburl" placeholder="Enter Business Website URL" class="form-control" id="email"  required>
+                            <br/>
+                            <label for="email">Enter CR Number</label>
+                            <input type="text" name="cr_number" placeholder="Enter Business CR Number" class="form-control" id="cr_number" required>
+                            <br/>
+                            <label for="email">Enter Page URL contains CR Number</label>
+                            <input type="text" name="weburlcr" placeholder="Enter Business Website URL" class="form-control" id="email"  required>
+                            <input type="hidden" name="method" value="weburl">
+                            {% csrf_token %}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                </div>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function(){
+    if($('.alert').length >0){
+       setTimeout(function(){
+        $('.alert').fadeOut('slow');
+       },5000);
+
+    }
+})
+
+</script>
+</body>
+</html>
